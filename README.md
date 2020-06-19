@@ -6,7 +6,7 @@ A simple python lib to interact with CRW nodes RPC using curl
 
 Example:
 
-    from crown-pycurl.client import Client
+    from crown_pycurl.client import Client
 
     # Set your RPC access info
     RPCUSER = 'your-rpc-user'
