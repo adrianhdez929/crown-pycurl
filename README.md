@@ -1,9 +1,9 @@
 # crown-pycurl
-=
+
 A simple python lib to interact with CRW nodes RPC using curl
 
 ## Usage:
-=
+
 Example:
 
     from crown-pycurl.client import Client
