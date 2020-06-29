@@ -292,7 +292,7 @@ class Client():
         if height:
             args.append(height)
         if regtxonly:
-            args.append(rgtxonly)
+            args.append(regtxonly)
         data = json.dumps(args)
         return self.execute('nftoken', data)
     # nftproto
@@ -332,7 +332,7 @@ class Client():
     # decodescript
     def decodescript(self, hex):
         data = json.dumps([hex])
-        return self.execute('decodescript')
+        return self.execute('decodescript', data)
     # getrawtransaction
     def getrawtransaction(self, txid, verbose=0):
         data = json.dumps([txid, verbose])
@@ -362,3 +362,215 @@ class Client():
     def verifymessage(self, address, signature, message):
         data = json.dumps([address, signature, message])
         return self.execute('verifymessage', data)
+    # == Wallet ==
+    # addmultisigaddress
+    def addmultisigaddress(self, nrequired, keysobject, account=None):
+        if account:
+            data = json.dumps([nrequired, keysobject, account])
+        else:
+            data = json.dumps([nrequired, keysobject])
+        return self.execute('addmultisigaddress', data)
+    # backupwallet
+    def backupwallet(self, destination):
+        data = json.dumps([destination])
+        return self.execute('backupwallet', data)
+    # convertaddress
+    def convertaddress(self, oldaddress):
+        data = json.dumps([oldaddress])
+        return self.execute('convertaddress', data)
+    # dumpprivkey
+    def dumpprivkey(self, address):
+        data = json.dumps([address])
+        return self.execute('dumpprivkey', data)
+    # dumpwallet
+    def dumpwallet(self, filename):
+        data = json.dumps([filename])
+        return self.execute('dumpwallet', data)
+    # encryptwallet
+    def encryptwallet(self, passphrase):
+        data = json.dumps([passphrase])
+        return self.execute('encryptwallet', data)
+    # getaccount
+    def getaccount(self, address):
+        data = json.dumps([address])
+        return self.execute('getaccount', data)
+    # getaccountaddress
+    def getaccountaddress(self, account):
+        data = json.dumps([account])
+        return self.execute('getaccountaddress', data)
+    # getaddressesbyaccount
+    def getaddressesbyaccount(self, account):
+        data = json.dumps([account])
+        return self.execute('getaddressesbyaccount', data)
+    # getbalance
+    def getbalance(self, account=None, minconf=None, includewatchonly=None):
+        args = []
+        if account:
+            args.append(account)
+        if minconf:
+            args.append(minconf)
+        if includewatchonly:
+            args.append(includewatchonly)
+        data = json.dumps(args)
+        return self.execute('getbalance', data)
+    # getnewaddress
+    def getnewaddress(self, account=None):
+        if account:
+            data = json.dumps([account])
+            return self.execute('getnewaddress', data) 
+        return self.execute('getnewaddress')
+    # getrawchangeaddress
+    def getrawchangeaddress(self):
+        return self.execute('getrawchangeaddress')
+    # getreceivedbyaccount
+    def getreceivedbyaccount(self, account, minconf=None):
+        if minconf:
+            data = json.dumps([account, minconf])
+        else:
+            data = json.dumps([account])
+        return self.execute('getreceivedbyaccount', data)
+    # getreceivedbyaddress
+    def getreceivedbyaddress(self, address, minconf=None):
+        if minconf:
+            data = json.dumps([address, minconf])
+        else:
+            data = json.dumps([address])
+        return self.execute('getreceivedbyaddress', data)
+    # gettransaction 
+    def gettransaction(self, txid, includewatchonly=None):
+        if includewatchonly:
+            data = json.dumps([txid, includewatchonly])
+        else:
+            data = json.dumps([txid])
+        return self.execute('gettransaction', data)
+    # getunconfirmedbalance
+    def getunconfirmedbalance(self):
+        return self.execute('getunconfirmedbalance')
+    # getwalletinfo
+    def getwalletinfo(self):
+        return self.execute('getwalletinfo')
+    # importaddress
+    def importaddress(self, address, label='', rescan=True):
+        data = json.dumps([address, label, rescan])
+        return self.execute('importaddress', data)
+    # importprivkey
+    def importprivkey(self, privkey, label='', rescan=True):
+        data = json.dumps([privkey, label, rescan])
+        return self.execute('importprivkey', data)
+    # importwallet 
+    def importwallet(self, filename):
+        data = json.dumps([filename])
+        return self.execute('importwallet', data)
+    # keypoolrefill
+    def keypoolrefill(self, newsize=100):
+        data = json.dumps([newsize])
+        return self.execute('keypoolrefill', data)
+    # listaccounts
+    def listaccounts(self, minconf=None, includewatchonly=None):
+        args = []
+        if minconf:
+            args.append(minconf)
+        if includewatchonly:
+            args.append(includewatchonly)
+        data = json.dumps(args)
+        return self.execute('listaccounts', data)
+    # listaddressgroupings
+    def listaddressgroupings(self):
+        return self.execute('listaddressgroupings')
+    # listlockunspent
+    def listlockunspent(self):
+        return self.execute('listlockunspent')
+    # listreceivedbyaccount
+    def listreceivedbyaccount(self, minconf=None, includeempty=None, includewatchonly=None):
+        args = []
+        if minconf:
+            args.append(minconf)
+        if includeempty:
+            args.append(includeempty)
+        if includewatchonly:
+            args.append(includewatchonly)
+        data = json.dumps(args)
+        return self.execute('listreceivedbyaccount', data)
+    # listreceivedbyaddress
+    def listreceivedbyaddress(self, minconf=None, includeempty=None, includewatchonly=None):
+        args = []
+        if minconf:
+            args.append(minconf)
+        if includeempty:
+            args.append(includeempty)
+        if includewatchonly:
+            args.append(includewatchonly)
+        data = json.dumps(args)
+        return self.execute('listreceivedbyaddress', data)
+    # listsinceblock
+    def listsinceblock(self, blockhash, confirmations=None, includewatchonly=None):
+        args = [blockhash]
+        if confirmations:
+            args.append(confirmations)
+        if includewatchonly:
+            args.append(includewatchonly)
+        data = json.dumps(args)
+        return self.execute('listsinceblock', data)
+    # listtransactions
+    def listtransactions(self, account=None, count=None, skip=None, includewatchonly=None):
+        args = []
+        if account:
+            args.append(account)
+        if count:
+            args.append(count)
+        if skip:
+            args.append(skip)
+        if includewatchonly:
+            args.append(includewatchonly)
+        data = json.dumps(args)
+        return self.execute('listtransactions', data)
+    # listunspent
+    def listunspent(self, minconf=1, maxconf=9999999, addresses=None):
+        if addresses:
+            data = json.dumps([minconf, maxconf, addresses])
+        else:
+            data = json.dumps([minconf, maxconf])
+        return self.execute('listunspent', data)
+    # lockunspent
+    def lockunspent(self, unlock, transactions):
+        data = json.dumps([unlock, transactions])
+        return self.execute('lockunspent', data)
+    # move
+    def move(self, fromaccount, toaccount, minconf=1, comment=''):
+        data = json.dumps([fromaccount, toaccount, minconf, comment])
+        return self.execute('move', data)
+    # sendfrom
+    def sendfrom(self, fromaccount, toaddress, amount, minconf=1, comment='', commentto=''):
+        data = json.dumps([fromaccount, toaddress, amount, minconf, comment, commentto])
+        return self.execute('sendfrom', data)
+    # sendmany
+    def sendmany(self, fromaccount, addresses, minconf=1, comment=''):
+        data = json.dumps([fromaccount, addresses, minconf, comment])
+        return self.execute('sendmany', data)
+    # sendtoaddress
+    def sendtoaddress(self, address, amount, comment='', commentto=''):
+        data = json.dumps([address, amount, comment, commentto])
+        return self.execute('sendtoaddress', data)
+    # sendtoaddressix
+    def sendtoaddressix(self, address, amount, comment='', commentto=''):
+        data = json.dumps([address, amount, comment, commentto])
+        return self.execute('sendtoaddressix', data)
+    # setaccount
+    def setaccount(self, address, account):
+        data = json.dumps([address, account])
+        return self.execute('setaccount', data)
+    # settxfee
+    def settxfee(self, amount):
+        data = json.dumps([amount])
+        return self.execute('settxfee', data)
+    # signmessage
+    def signmessage(self, address, message):
+        data = json.dumps([address, message])
+        return self.execute('signmessage', data)
+    # update
+    def update(self, command, passphrase=None):
+        if passphrase:
+            data = json.dumps([command, passphrase])
+        else:
+            data = json.dumps([command])
+        return self.execute('update', data)
