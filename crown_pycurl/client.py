@@ -279,7 +279,7 @@ class Client():
     def nftoken_ownerof(self, proto, id):
         data = json.dumps(['ownerof', proto, id])
         return self.execute('nftoken', data)
-    def nftoken_list(self, proto=None, address=None, count=None, skip=None, height=None, rgtxonly=False):
+    def nftoken_list(self, proto=None, address=None, count=None, skip=None, height=None, regtxonly=False):
         args = ['list']
         if proto:
             args.append(proto)
@@ -291,12 +291,35 @@ class Client():
             args.append(skip)
         if height:
             args.append(height)
-        if rgtxonly:
+        if regtxonly:
             args.append(rgtxonly)
         data = json.dumps(args)
-        print(data)
         return self.execute('nftoken', data)
     # nftproto
+    def nftproto_register(self, id, name, owner, sign=2, mimetype='text/plain', schemauri='', transferable=True, embedded=False, size=255):
+        data = json.dumps(['register', id, name, owner, sign, mimetype, schemauri, transferable, embedded, size])
+        return self.execute('nftproto', data)
+    def nftproto_list(self, count=None, skip=None, height=None, regtxonly=False):
+        args = ['list']
+        if count:
+            args.append(count)
+        if skip:
+            args.append(skip)
+        if height:
+            args.append(height)
+        if regtxonly:
+            args.append(regtxonly)
+        data = json.dumps(args)
+        return self.execute('nftproto', data)
+    def nftproto_get(self, id):
+        data = json.dumps(['get', id])
+        return self.execute('nftproto', data)
+    def nftproto_getbytxid(self, txid):
+        data = json.dumps(['getbytxid', txid])
+        return self.execute('nftproto', data)
+    def nftproto_ownerof(self, proto):
+        data = json.dumps(['ownerof', proto])
+        return self.execute('nftproto', data)
     # == Rawtransactions == 
     # createrawtransaction
     def createrawtransaction(self, transactions, addresses):
