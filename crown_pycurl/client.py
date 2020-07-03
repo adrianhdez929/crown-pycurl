@@ -6,7 +6,6 @@ from pycurl import Curl
 # Base curl client, with initial parameters for Crown
 class Client():
     def __init__(self, user, passwd, host, testnet=False):
-        self.req_buffer = BytesIO()
         self.client = Curl()
         self.set_headers(user, passwd, host, testnet=testnet)
 
@@ -27,18 +26,20 @@ class Client():
         self.client.setopt(self.client.CUSTOMREQUEST, 'POST')
         self.client.setopt(self.client.HTTPHEADER, ["cache-control: no-cache","content-type: application/json","user: {0}:{1}".format \
                                                     (user, passwd),])
-        self.client.setopt(self.client.WRITEDATA, self.req_buffer)
 
     # Execute the command set on 'method' with parameters 'params' as with the 'crown-cli' tool
     def execute(self, method, params=[]):
+        # Instantiates the buffer just before the request to perform multiple requests per object
+        req_buffer = BytesIO()
+        # Sets the local buffer to be where the request data is written
+        self.client.setopt(self.client.WRITEDATA, req_buffer)
         self.client.setopt(self.client.POSTFIELDS, '{"jsonrpc": "1.0", "id": "crown-pycurl", "method": "%s", "params": %s}' % \
                                                     (method, params))
         print('{"jsonrpc": "1.0", "id": "crown-pycurl", "method": "%s", "params": %s}' % \
                                                     (method, params))                          
         self.client.perform()
         # Returns a JSON object with the response
-        return json.loads(self.req_buffer.getvalue().decode('utf-8'))
-
+        return json.loads(req_buffer.getvalue().decode('utf-8'))
     # A set of commands implementations
     # == Blockchain == 
     # getbestblockhash
@@ -50,7 +51,7 @@ class Client():
         return self.execute('getblock', data)
     # getblockchaininfo
     def getblockchaininfo(self):
-        return self.execute('getbestblockhash')
+        return self.execute('getblockchaininfo')
     # getblockcount
     def getblockcount(self):
         return self.execute('getblockcount')
