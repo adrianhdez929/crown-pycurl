@@ -19,6 +19,10 @@ class SecureClient(Client):
         Client.__init__(self, rpc_user, rpc_passwd, '127.0.0.1:{0}'.format(str(local_port)), testnet)
         self.set_secure_headers(rpc_user, rpc_passwd, local_port)
 
+    # Object destructor, closes the SSHTunnel
+    def __del__(self):
+        self.sshtunnel.stop()
+
     # Kind of an override of set_headers in parent, but this time to only set request URL to the local forwarded address
     def set_secure_headers(self, user, passwd, port):
         self.client.setopt(self.client.PORT, port)
