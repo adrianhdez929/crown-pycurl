@@ -8,7 +8,7 @@ setup(
   author =  'adrianhdez929',
   author_email = 'adrianhdez929@gmail.com',
   url = 'https://github.com/user/adrianhdez929',
-  download_url = 'https://github.com/user/reponame/archive/v_01.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/adrianhdez929/crown-pycurl/releases/tag/v_01.tar.gz',
   keywords = ['Crown', 'PyCurl', 'RPC'],
   install_requires=[
           'pycurl',
