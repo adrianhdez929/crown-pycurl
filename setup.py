@@ -1,7 +1,7 @@
 from distutils.core import setup
 setup(
-  name = 'pycrown',   
-  packages = ['pycrown'],
+  name = 'crown_pycurl',   
+  packages = ['crown_pycurl'],
   version = '0.1',
   license='MIT',
   description = 'A simple python lib to interact with CRW nodes RPC using curl',
