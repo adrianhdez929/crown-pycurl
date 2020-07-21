@@ -2,17 +2,17 @@ from distutils.core import setup
 setup(
   name = 'crown_pycurl',   
   packages = ['crown_pycurl'],
-  version = '0.1',
+  version = '0.2',
   license='MIT',
   description = 'A simple python lib to interact with CRW nodes RPC using curl',
   author =  'adrianhdez929',
   author_email = 'adrianhdez929@gmail.com',
-  url = 'https://github.com/user/adrianhdez929',
-  download_url = 'https://github.com/adrianhdez929/crown-pycurl/releases/tag/v_01.tar.gz',
+  url = 'https://github.com/adrianhdez929',
+  download_url = 'https://github.com/adrianhdez929/crown-pycurl/releases/tag/v_02.tar.gz',
   keywords = ['Crown', 'PyCurl', 'RPC'],
   install_requires=[
           'pycurl',
-          'sshtunel',
+          'sshtunnel',
       ],
   classifiers=[
     'Development Status :: 4 - Beta',
