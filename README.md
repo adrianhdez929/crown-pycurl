@@ -14,9 +14,10 @@ Example:
     RPCUSER = 'your-rpc-user'
     RPCPASS = 'your-rpc-passwd'
     RPCHOST = 'your-rpc-host'
+    RPCPORT = 9341
 
     # Create a new instance of the client with the access info
-    client = Client(RPCUSER, RPCPASS, RPCHOST) # To use testnet just add a fourth boolean parameter as True
+    client = Client(RPCUSER, RPCPASS, RPCHOST, RPCPORT) # To use testnet just add a fourth boolean parameter as True
 
     # Then just find the cli command you want to execute (in this example getinfo)
     response = client.getinfo()
@@ -38,6 +39,7 @@ Example:
     RPCUSER = 'your-rpc-user'
     RPCPASS = 'your-rpc-passwd'
     RPCHOST = 'your-rpc-host'
+    RPCPORT = 9341
 
     # Get your node SSH login data from environment
     SSHUSER = os.environ.get(SSH_USER)
@@ -48,7 +50,7 @@ Example:
     LOCAL_PORT = 8000 
 
     # Create a new instance of the client with the rpc access info and your ssh login data
-    client = SecureClient(RPCUSER, RPCPASS, LOCAL_PORT, SSHPORT, SSHUSER, SSHPASS, RPCHOST) # For testnet add the boolean param
+    client = SecureClient(RPCUSER, RPCPASS, LOCAL_PORT, SSHPORT, SSHUSER, SSHPASS, RPCHOST, RPCPORT) # For testnet add the boolean param
 
     # Execute the desired cli command just as in the standard client
     response = client.getinfo()

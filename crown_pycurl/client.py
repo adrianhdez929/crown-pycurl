@@ -5,18 +5,14 @@ from pycurl import Curl
 
 # Base curl client, with initial parameters for Crown
 class Client():
-    def __init__(self, user, passwd, host, testnet=False):
+    def __init__(self, user, passwd, host, port=9431):
         self.client = Curl()
-        self.set_headers(user, passwd, host, testnet=testnet)
+        self.set_headers(user, passwd, host, port)
 
     # Sets the connection headers
-    def set_headers(self, user, passwd, host, testnet=False):
-        if testnet:
-            self.client.setopt(self.client.PORT, 19341)    
-            self.client.setopt(self.client.URL, 'http://'+user+':'+passwd+'@'+host+':19341')
-        else:
-            self.client.setopt(self.client.PORT, 9341)
-            self.client.setopt(self.client.URL, 'http://'+user+':'+passwd+'@'+host+':9341')
+    def set_headers(self, user, passwd, host, port):
+        self.client.setopt(self.client.PORT, 9341)
+        self.client.setopt(self.client.URL, f'http://{user}:{passwd}@{host}:{port}')
         
         self.client.setopt(self.client.ENCODING, '')
         self.client.setopt(self.client.MAXREDIRS, 10)

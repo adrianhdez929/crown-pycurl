@@ -6,7 +6,7 @@ from .client import Client
 
 
 class SecureClient(Client):
-    def __init__(self, rpc_user, rpc_passwd, local_port, remote_port, remote_user, remote_passwd, remote_host, testnet=False):
+    def __init__(self, rpc_user, rpc_passwd, local_port, remote_port, remote_user, remote_passwd, remote_host, rpc_port):
         # Creates an SSH connection to the RPC host and forwards it into a designed port on your local machine
         self.sshtunnel = SSHTunnel(
             (remote_host, 22), 
@@ -16,7 +16,7 @@ class SecureClient(Client):
             local_bind_address=('127.0.0.1', local_port)
         )
         self.sshtunnel.start()
-        Client.__init__(self, rpc_user, rpc_passwd, '127.0.0.1:{0}'.format(str(local_port)), testnet)
+        Client.__init__(self, rpc_user, rpc_passwd, '127.0.0.1:{0}'.format(str(local_port)), rpc_port)
         self.set_secure_headers(rpc_user, rpc_passwd, local_port)
 
     # Object destructor, closes the SSHTunnel
