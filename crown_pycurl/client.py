@@ -11,7 +11,7 @@ class Client():
 
     # Sets the connection headers
     def set_headers(self, user, passwd, host, port):
-        self.client.setopt(self.client.PORT, 9341)
+        self.client.setopt(self.client.PORT, port)
         self.client.setopt(self.client.URL, f'http://{user}:{passwd}@{host}:{port}')
         
         self.client.setopt(self.client.ENCODING, '')
