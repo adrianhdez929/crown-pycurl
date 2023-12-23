@@ -5,9 +5,10 @@ from pycurl import Curl
 
 # Base curl client, with initial parameters for Crown
 class Client():
-    def __init__(self, user, passwd, host, port=9431):
+    def __init__(self, user, passwd, host, port=9431, log=False):
         self.client = Curl()
         self.set_headers(user, passwd, host, port)
+        self.log = log
 
     # Sets the connection headers
     def set_headers(self, user, passwd, host, port):
@@ -31,7 +32,8 @@ class Client():
         self.client.setopt(self.client.WRITEDATA, req_buffer)
         self.client.setopt(self.client.POSTFIELDS, '{"jsonrpc": "1.0", "id": "crown-pycurl", "method": "%s", "params": %s}' % \
                                                     (method, params))
-        print('{"jsonrpc": "1.0", "id": "crown-pycurl", "method": "%s", "params": %s}' % \
+        if self.log:
+            print('{"jsonrpc": "1.0", "id": "crown-pycurl", "method": "%s", "params": %s}' % \
                                                     (method, params))                          
         self.client.perform()
         # Returns a JSON object with the response
@@ -234,7 +236,8 @@ class Client():
             data = json.dumps([dns, node])
         else:
             data = json.dumps([dns])
-        print(data)
+        if self.log:
+            print(data)
         return self.execute('getaddednodeinfo', data)
     # getconnectioncount
     def getconnectioncount(self):
